@@ -183,9 +183,9 @@ var createTaskActions = function (taskId) {
 
 
     }
-   
+
     return actionContainerEl;
-   
+
 
 
 
@@ -300,7 +300,7 @@ var taskStatusChangeHandler = function (event) {
         }
 
     }
-    
+
     saveTasks();
 
 };
@@ -351,8 +351,17 @@ var deleteTask = function (taskId) {
     saveTasks();
 };
 
-var saveTasks = function() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+var saveTasks = function () {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+loadTasks = function () {
+    //Gets task items from localStorage.
+
+    //Converts tasks from the string format back into an array of objects.
+
+    //Iterates through a tasks array and creates task elements on the page from it
+    localStorage.getItem("tasks", JSON.stringify(tasks));
 }
 
 
