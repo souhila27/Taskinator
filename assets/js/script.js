@@ -9,7 +9,7 @@ var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 
 var pageContentEl = document.querySelector("#page-content");
-
+var tasks = [];
 
 
 
@@ -46,11 +46,16 @@ var taskFormHandler = function (event) {
 
             name: taskNameInput,
 
-            type: taskTypeInput
+            type: taskTypeInput,
+
+            status: "to do"
 
         };
 
         createTaskEl(taskDataObj);
+        console.log(taskDataObj);
+        console.log(taskDataObj.status);
+
 
     }
 };
@@ -93,6 +98,9 @@ var createTaskEl = function (taskDataObj) {
 
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);
+
+    taskDataObj.id = taskIdCounter;
+    tasks.push(taskDataObj)
 
 
     taskIdCounter++;
@@ -197,6 +205,15 @@ var completeEditTask = function (taskName, taskType, taskId) {
 
     // console.log(taskSelected);
 
+    //loop through tasks array and task object with the new content
+
+    for(var i=0; i < tasks.length; i++){
+        if(tasks[i].id === parseInt(taskId)){
+            tasks[i].name = taskName;
+            tasks[i].type =taskType;
+        }
+    };
+
 
 
 
@@ -271,6 +288,17 @@ var taskStatusChangeHandler = function (event) {
     }
 
 
+
+    //update task's in tasks array
+
+    for(var i = 0; i < tasks.length; i++){
+        if (tasks[i].id === parseInt(taskId)){
+            tasks[i].stats = statusValue;
+        }
+
+    }
+ console.log(tasks);
+
 };
 
 
@@ -297,6 +325,25 @@ var editTask = function (taskId) {
 var deleteTask = function (taskId) {
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+
+    //create new arrat to hold updated list of tasks
+
+    var updatedTaskArr =[];
+
+
+    //loop through current tasks 
+    for( var i = 0; i < tasks.length; i++){
+        // if tasks[i].id doesn't match the value of taskId, let's keep that task and push it into the new array
+        if (tasks[i].id !== parseInt(taskId)){
+
+            updatedTaskArr.push(tasks[i]);
+
+        }
+
+    }
+
+    //reassign tasks array to be the same as updatedTaskArr
+    tasks = updatedTaskArr;
 };
 
 
